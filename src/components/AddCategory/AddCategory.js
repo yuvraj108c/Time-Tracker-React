@@ -4,7 +4,7 @@ import postToServer from "../../utils/postToServer";
 import { Card, Form, Input, Button } from "semantic-ui-react";
 import { SketchPicker } from "react-color";
 
-import "./style.css";
+import "./style.scss";
 
 class AddCategory extends Component {
   constructor() {
@@ -46,31 +46,34 @@ class AddCategory extends Component {
     });
   }
 
-  async handleSubmit(e) {
+  handleSubmit(e) {
     e.preventDefault();
+
     const data = {
       name: this.state.category,
       color: this.state.color
     };
 
-    const response = await postToServer(
+    const response = postToServer(
       process.env.REACT_APP_POST_CATEGORY_URL,
       data
     );
 
-    this.setState({
-      color: "",
-      category: "",
-      displayPicker: false
+    response.then(r => {
+      console.log(r);
+      this.setState({
+        color: "",
+        category: "",
+        displayPicker: false
+      });
     });
-    console.log(" New Category: " + response);
   }
 
   render() {
     const { color, category } = this.state;
     return (
-      <Card>
-        <Form onSubmit={this.handleSubmit} className="add-category-form">
+      <Card className="add-category-card">
+        <Form onSubmit={this.handleSubmit}>
           <Form.Group>
             <Input
               placeholder="New Category"
