@@ -2,6 +2,7 @@ import React from "react";
 
 import Navbar from "../Navbar";
 import { Container, Grid } from "semantic-ui-react";
+import AddCategory from "../AddCategory";
 import "./App.css";
 
 const App = () => {
@@ -16,7 +17,7 @@ const App = () => {
               Grid 1
             </Grid.Column>
             <Grid.Column mobile={16} computer={6}>
-              Grid 2
+              <AddCategory />
             </Grid.Column>
           </Grid>
         </Container>
