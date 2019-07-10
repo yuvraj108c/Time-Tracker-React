@@ -5,7 +5,7 @@ import { Menu, Container } from "semantic-ui-react";
 class Navbar extends Component {
   render() {
     return (
-      <Menu size="massive" fixed="top" inverted>
+      <Menu size="massive" inverted>
         <Container>
           <Menu.Item as={Link} to="/" header>
             Time Tracker
