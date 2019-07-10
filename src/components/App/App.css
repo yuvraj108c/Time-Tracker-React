@@ -1,0 +1,7 @@
+.App .column {
+  border: 0.5px dotted gray;
+  height: 80vh;
+}
+.App .main-content {
+  margin-top: 25px;
+}
