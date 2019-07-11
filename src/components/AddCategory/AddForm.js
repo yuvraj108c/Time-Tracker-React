@@ -1,25 +1,29 @@
 import React, { Component } from "react";
-import { Form, Input, Button } from "semantic-ui-react";
+import { Grid, Form, Input, Button } from "semantic-ui-react";
 
 class AddForm extends Component {
   render() {
     return (
       <Form onSubmit={this.props.handleSubmit}>
-        <Form.Group>
-          <Input
-            placeholder="New Category"
-            value={this.props.category}
-            onChange={this.props.setCategory}
-            required
-          />
-          <Button
-            type="submit"
-            disabled={this.props.disabled}
-            style={{ backgroundColor: this.props.color }}
-          >
-            Add
-          </Button>
-        </Form.Group>
+        <Grid>
+          <Grid.Column mobile={12}>
+            <Input
+              placeholder="New Category"
+              value={this.props.category}
+              onChange={this.props.setCategory}
+              required
+            />
+          </Grid.Column>
+          <Grid.Column mobile={4}>
+            <Button
+              type="submit"
+              disabled={this.props.disabled}
+              style={{ backgroundColor: this.props.color }}
+            >
+              Add
+            </Button>
+          </Grid.Column>
+        </Grid>
       </Form>
     );
   }
