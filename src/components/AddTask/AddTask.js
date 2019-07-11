@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import getFromServer from "../../utils/getFromServer";
 import InputWithDropdown from "./InputWithDropdown";
-import { Grid, Form, Card, Button } from "semantic-ui-react";
+import { Grid, Card } from "semantic-ui-react";
 import Btn from "./Btn";
 
 import "./style.scss";
@@ -16,6 +16,7 @@ class AddTask extends Component {
       duration: "00:00:00",
       btnText: "Start",
       btnColor: "blue",
+      btnDisabled: false,
       timer: null
     };
     this.handleDropdownChange = this.handleDropdownChange.bind(this);
@@ -71,22 +72,29 @@ class AddTask extends Component {
     let elapsedTime = 0;
 
     this.setState({
+      btnDisabled: true
+    });
+
+    this.setState({
       timer: setInterval(() => {
         elapsedTime++;
         this.setState({
+          btnDisabled:
+            this.state.taskName && this.state.taskCategory ? false : true,
           duration: new Date(elapsedTime * 1000).toISOString().substr(11, 8)
         });
       }, 1000)
     });
   }
   stopTimer() {
-    //   TODO: Validate Form
     // TODO: Send to server
     // TODO: Show tracked task
     clearInterval(this.state.timer);
     this.setState({
       timer: null,
-      duration: "00:00:00"
+      duration: "00:00:00",
+      taskCategory: this.state.categoriesOptions[0].key,
+      taskName: ""
     });
   }
   render() {
@@ -113,6 +121,7 @@ class AddTask extends Component {
                   text={this.state.btnText}
                   color={this.state.btnColor}
                   handleClick={this.handleButtonClick}
+                  disabled={this.state.btnDisabled}
                 />
               </Grid.Column>
             </Grid>
