@@ -1,4 +1,14 @@
 .ui.card.add-task-card {
   width: 100%;
   padding: 10px;
+  .ui.grid {
+    width: 100%;
+    .ui.action.input {
+      width: 100%;
+    }
+    h3.duration-display {
+      text-align: center;
+      margin-top: 8px;
+    }
+  }
 }
