@@ -95,7 +95,7 @@ class AddTask extends Component {
         {this.state.categoriesOptions.length > 0 && (
           <>
             <Grid>
-              <Grid.Column mobile={11}>
+              <Grid.Column mobile={10}>
                 <InputWithDropdown
                   options={this.state.categoriesOptions}
                   defaultCategory={this.state.categoriesOptions[0].key}
@@ -108,7 +108,7 @@ class AddTask extends Component {
               <Grid.Column mobile={3}>
                 <h3 className="duration-display">{this.state.duration}</h3>
               </Grid.Column>
-              <Grid.Column mobile={2}>
+              <Grid.Column mobile={3}>
                 <Btn
                   text={this.state.btnText}
                   color={this.state.btnColor}
