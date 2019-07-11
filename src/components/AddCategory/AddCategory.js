@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import postToServer from "../../utils/postToServer";
 
-import { Card, Form, Input, Button } from "semantic-ui-react";
+import { Card } from "semantic-ui-react";
 import { SketchPicker } from "react-color";
-
+import AddForm from "./AddForm";
 import "./style.scss";
 
 class AddCategory extends Component {
@@ -71,26 +71,16 @@ class AddCategory extends Component {
 
   render() {
     const { color, category } = this.state;
+    const disableSubmitBtn = category && color ? false : true;
     return (
       <Card className="add-category-card">
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Group>
-            <Input
-              placeholder="New Category"
-              value={category}
-              onChange={this.setCategory}
-              required
-            />
-            <Button
-              type="submit"
-              disabled={category && color ? false : true}
-              style={{ backgroundColor: color }}
-            >
-              Add
-            </Button>
-          </Form.Group>
-        </Form>
-
+        <AddForm
+          handleSubmit={this.handleSubmit}
+          category={category}
+          color={color}
+          setCategory={this.setCategory}
+          disabled={disableSubmitBtn}
+        />
         {/* Color Picker */}
         {this.state.displayPicker && (
           <SketchPicker onChange={this.setColor} color={color} />
