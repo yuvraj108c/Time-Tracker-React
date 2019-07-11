@@ -3,6 +3,8 @@ import React from "react";
 import Navbar from "../Navbar";
 import { Container, Grid } from "semantic-ui-react";
 import AddCategory from "../AddCategory";
+import AddTask from "../AddTask";
+
 import "./App.css";
 
 const App = () => {
@@ -14,7 +16,7 @@ const App = () => {
         <Container>
           <Grid>
             <Grid.Column mobile={16} computer={10}>
-              Grid 1
+              <AddTask />
             </Grid.Column>
             <Grid.Column mobile={16} computer={6}>
               <AddCategory />
