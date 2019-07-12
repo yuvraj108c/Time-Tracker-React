@@ -13,6 +13,17 @@ router.get("/", async (_, res) => {
   }
 });
 
+// Get a category
+router.get("/:id", async (req, res) => {
+  try {
+    const category = await Categories.find({ _id: req.params.id });
+    res.json(category);
+  } catch (err) {
+    res.status(500).json("Error: " + err);
+    throw new Error(err);
+  }
+});
+
 // Post a category
 router.post("/", async (req, res) => {
   try {
