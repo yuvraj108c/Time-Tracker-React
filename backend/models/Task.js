@@ -5,10 +5,9 @@ const taskSchema = new mongoose.Schema({
   category: { type: mongoose.Schema.Types.ObjectId, ref: "categories" },
   startTime: String,
   endTime: String,
-  duration: String,
   createdOn: {
     type: Date,
-    default: new Date().toISOString().slice(0, 10)
+    default: new Date()
   }
 });
 
