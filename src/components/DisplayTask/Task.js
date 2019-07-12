@@ -28,7 +28,9 @@ class Task extends Component {
             </Grid.Column>
             <Grid.Column mobile={2}>{startTime}</Grid.Column>
             <Grid.Column mobile={2}>{endTime}</Grid.Column>
-            <Grid.Column mobile={3}>{duration}</Grid.Column>
+            <Grid.Column className="text-center" mobile={3}>
+              {duration}
+            </Grid.Column>
           </Grid>
         </Item.Content>
       </Item>

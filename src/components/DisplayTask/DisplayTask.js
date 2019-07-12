@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import moment from "moment";
 import Task from "./Task";
-import { Card, Item } from "semantic-ui-react";
+import { Card, Item, Grid } from "semantic-ui-react";
 import getFromServer from "../../utils/getFromServer";
 
 import "./style.scss";
@@ -35,6 +35,19 @@ class DisplayTask extends Component {
     return (
       <Card className="tasks-card">
         <Item.Group divided>
+          <Item className="task-item-header">
+            <Item.Content>
+              <Grid>
+                <Grid.Column mobile={6}>Name</Grid.Column>
+                <Grid.Column mobile={3}>Category</Grid.Column>
+                <Grid.Column mobile={2}>Start</Grid.Column>
+                <Grid.Column mobile={2}>End</Grid.Column>
+                <Grid.Column className="text-center" mobile={3}>
+                  Duration
+                </Grid.Column>
+              </Grid>
+            </Item.Content>
+          </Item>
           {this.state.categories &&
             this.state.tasks.map(task => {
               const { _id, name, category, startTime, endTime } = task;
