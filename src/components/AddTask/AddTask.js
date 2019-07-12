@@ -32,17 +32,20 @@ class AddTask extends Component {
     //   Fetch categories from server
     getFromServer(process.env.REACT_APP_GET_CATEGORIES_URL).then(categories => {
       const modifiedCategories = [];
-      categories.forEach(c => {
-        modifiedCategories.push({
-          key: c._id,
-          text: c.name,
-          value: c.name
+
+      if (categories.length > 0) {
+        categories.forEach(c => {
+          modifiedCategories.push({
+            key: c._id,
+            text: c.name,
+            value: c.name
+          });
         });
-      });
-      this.setState({
-        categoriesOptions: modifiedCategories,
-        taskCategory: modifiedCategories[0].value
-      });
+        this.setState({
+          categoriesOptions: modifiedCategories,
+          taskCategory: modifiedCategories[0].value
+        });
+      }
     });
   }
   handleInputChange(e) {
@@ -123,7 +126,7 @@ class AddTask extends Component {
   render() {
     return (
       <Card className="add-task-card">
-        {this.state.categoriesOptions.length > 0 && (
+        {this.state.categoriesOptions.length > 0 ? (
           <>
             <Grid>
               <Grid.Column mobile={10}>
@@ -149,6 +152,8 @@ class AddTask extends Component {
               </Grid.Column>
             </Grid>
           </>
+        ) : (
+          <h3 className="empty-message">Add a category to get started!</h3>
         )}
       </Card>
     );
