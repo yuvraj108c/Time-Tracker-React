@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import moment from "moment";
 import getFromServer from "../../utils/getFromServer";
+import postToServer from "../../utils/postToServer";
 import InputWithDropdown from "./InputWithDropdown";
 import { Grid, Card } from "semantic-ui-react";
 import Btn from "./Btn";
@@ -13,6 +15,7 @@ class AddTask extends Component {
       categoriesOptions: [],
       taskName: "",
       taskCategory: "",
+      startTime: "",
       duration: "00:00:00",
       btnText: "Start",
       btnColor: "blue",
@@ -33,12 +36,12 @@ class AddTask extends Component {
         modifiedCategories.push({
           key: c._id,
           text: c.name,
-          value: c._id
+          value: c.name
         });
       });
       this.setState({
         categoriesOptions: modifiedCategories,
-        taskCategory: modifiedCategories[0].key
+        taskCategory: modifiedCategories[0].value
       });
     });
   }
@@ -72,7 +75,8 @@ class AddTask extends Component {
     let elapsedTime = 0;
 
     this.setState({
-      btnDisabled: true
+      btnDisabled: true,
+      startTime: moment().format("hh:mm:ss")
     });
 
     this.setState({
@@ -83,19 +87,38 @@ class AddTask extends Component {
             this.state.taskName && this.state.taskCategory ? false : true,
           duration: new Date(elapsedTime * 1000).toISOString().substr(11, 8)
         });
+
+        localStorage.setItem(
+          "Task",
+          JSON.stringify({
+            name: this.state.taskName,
+            duration: this.state.duration
+          })
+        );
       }, 1000)
     });
   }
   stopTimer() {
     // TODO: Send to server
-    // TODO: Show tracked task
+    const data = {
+      name: this.state.taskName,
+      category: this.state.taskCategory,
+      startTime: this.state.startTime,
+      endTime: moment().format("hh:mm:ss")
+    };
+    console.log(data);
+    postToServer(process.env.REACT_APP_POST_TASK_URL, data).then(res =>
+      console.log(res)
+    );
     clearInterval(this.state.timer);
     this.setState({
       timer: null,
+      taskName: "",
+      starTime: "",
       duration: "00:00:00",
-      taskCategory: this.state.categoriesOptions[0].key,
-      taskName: ""
+      taskCategory: this.state.categoriesOptions[0].value
     });
+    localStorage.removeItem("Task");
   }
   render() {
     return (
