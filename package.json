@@ -14,6 +14,7 @@
     "semantic-ui-react": "^0.87.3"
   },
   "scripts": {
+    "run": "npm start && cd backend && nodemon ./bin/www && cd ..",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
