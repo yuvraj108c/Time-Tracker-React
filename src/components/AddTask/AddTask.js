@@ -150,7 +150,15 @@ class AddTask extends Component {
               />
             </Grid.Column>
             <Grid.Column mobile={3}>
-              <h3 className="duration-display">{this.state.duration}</h3>
+              <h3
+                className={
+                  this.state.timer === null
+                    ? "duration-display"
+                    : "duration-display animated infinite flash"
+                }
+              >
+                {this.state.duration}
+              </h3>
             </Grid.Column>
             <Grid.Column mobile={3}>
               <Btn
