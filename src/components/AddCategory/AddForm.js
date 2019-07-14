@@ -6,7 +6,7 @@ class AddForm extends Component {
     return (
       <Form onSubmit={this.props.handleSubmit}>
         <Grid>
-          <Grid.Column mobile={12}>
+          <Grid.Column mobile={11} computer={10}>
             <Input
               placeholder="New Category"
               value={this.props.category}
@@ -14,7 +14,7 @@ class AddForm extends Component {
               required
             />
           </Grid.Column>
-          <Grid.Column mobile={4}>
+          <Grid.Column mobile={5} computer={6}>
             <Button
               type="submit"
               disabled={this.props.disabled}
