@@ -51,10 +51,14 @@ class Homepage extends Component {
             <Container>
               <Grid>
                 <Grid.Column mobile={16} computer={10}>
-                  <AddTask
-                    categories={categories}
-                    fetchTasks={this.fetchTasks}
-                  />
+                  {categories.length > 0 ? (
+                    <AddTask
+                      categories={categories}
+                      fetchTasks={this.fetchTasks}
+                    />
+                  ) : (
+                    <h3>Add a category to get started!</h3>
+                  )}
                   <DisplayTask tasks={tasks} />
                 </Grid.Column>
                 <Grid.Column mobile={16} computer={6}>
