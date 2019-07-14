@@ -1,18 +1,20 @@
 import React, { Component } from "react";
 import moment from "moment";
-import getFromServer from "../../utils/getFromServer";
+
 import postToServer from "../../utils/postToServer";
 import InputWithDropdown from "./InputWithDropdown";
-import { Grid, Card } from "semantic-ui-react";
 import Btn from "./Btn";
+
+import { Grid, Card } from "semantic-ui-react";
 
 import "./style.scss";
 
 class AddTask extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
-      categoriesOptions: [],
+      dropdownOptions: [],
       taskName: "",
       taskCategory: "",
       startTime: "",
@@ -22,30 +24,37 @@ class AddTask extends Component {
       btnDisabled: false,
       timer: null
     };
+    this.createDropdownOptions = this.createDropdownOptions.bind(this);
     this.handleDropdownChange = this.handleDropdownChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.startTimer = this.startTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
   }
-  componentDidMount() {
-    //   Fetch categories from server
-    getFromServer(process.env.REACT_APP_GET_CATEGORIES_URL).then(categories => {
-      const modifiedCategories = [];
 
-      if (categories.length > 0) {
-        categories.forEach(c => {
-          modifiedCategories.push({
-            key: c._id,
-            text: c.name,
-            value: c.name
-          });
-        });
-        this.setState({
-          categoriesOptions: modifiedCategories,
-          taskCategory: modifiedCategories[0].value
-        });
-      }
+  componentDidMount() {
+    this.createDropdownOptions();
+  }
+  componentDidUpdate(prevProps) {
+    // Update if new categories added
+    if (prevProps.categories.length < this.props.categories.length) {
+      this.createDropdownOptions();
+    }
+  }
+  createDropdownOptions() {
+    const dropdownOptions = [];
+
+    this.props.categories.forEach(c => {
+      dropdownOptions.push({
+        key: c._id,
+        text: c.name,
+        value: c.name
+      });
+
+      this.setState({
+        dropdownOptions,
+        taskCategory: dropdownOptions[0].value
+      });
     });
   }
   handleInputChange(e) {
@@ -109,51 +118,47 @@ class AddTask extends Component {
       endTime: moment().format("HH:mm")
     };
     console.log(data);
-    postToServer(process.env.REACT_APP_POST_TASK_URL, data).then(res =>
-      console.log(res)
-    );
+    postToServer(process.env.REACT_APP_POST_TASK_URL, data).then(res => {
+      console.log(res);
+      this.props.fetchTasks();
+    });
     clearInterval(this.state.timer);
     this.setState({
       timer: null,
       taskName: "",
       startTime: "",
       duration: "00:00:00",
-      taskCategory: this.state.categoriesOptions[0].value
+      taskCategory: this.state.dropdownOptions[0].value
     });
     localStorage.removeItem("Task");
   }
   render() {
     return (
       <Card className="add-task-card">
-        {this.state.categoriesOptions.length > 0 ? (
-          <>
-            <Grid>
-              <Grid.Column mobile={10}>
-                <InputWithDropdown
-                  options={this.state.categoriesOptions}
-                  defaultCategory={this.state.categoriesOptions[0].key}
-                  handleInputChange={this.handleInputChange}
-                  handleDropdownChange={this.handleDropdownChange}
-                  taskName={this.state.taskName}
-                  taskCategory={this.state.taskCategory}
-                />
-              </Grid.Column>
-              <Grid.Column mobile={3}>
-                <h3 className="duration-display">{this.state.duration}</h3>
-              </Grid.Column>
-              <Grid.Column mobile={3}>
-                <Btn
-                  text={this.state.btnText}
-                  color={this.state.btnColor}
-                  handleClick={this.handleButtonClick}
-                  disabled={this.state.btnDisabled}
-                />
-              </Grid.Column>
-            </Grid>
-          </>
-        ) : (
-          <h3 className="empty-message">Add a category to get started!</h3>
-        )}
+        <>
+          <Grid>
+            <Grid.Column mobile={10}>
+              <InputWithDropdown
+                options={this.state.dropdownOptions}
+                handleInputChange={this.handleInputChange}
+                handleDropdownChange={this.handleDropdownChange}
+                taskName={this.state.taskName}
+                taskCategory={this.state.taskCategory}
+              />
+            </Grid.Column>
+            <Grid.Column mobile={3}>
+              <h3 className="duration-display">{this.state.duration}</h3>
+            </Grid.Column>
+            <Grid.Column mobile={3}>
+              <Btn
+                text={this.state.btnText}
+                color={this.state.btnColor}
+                handleClick={this.handleButtonClick}
+                disabled={this.state.btnDisabled}
+              />
+            </Grid.Column>
+          </Grid>
+        </>
       </Card>
     );
   }
