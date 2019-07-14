@@ -27,14 +27,13 @@ const DisplayTask = props => {
         {/* Display tasks */}
         {props.tasks.map(task => {
           const { _id, name, category, startTime, endTime } = task;
-          const { cName, cColor } = props.categories[category];
 
           return (
             <Task
               key={_id}
               name={name}
-              categoryName={cName}
-              categoryColor={cColor}
+              categoryName={category[0].name}
+              categoryColor={category[0].color}
               startTime={startTime}
               endTime={endTime}
               duration={calculateDuration(startTime, endTime)}
