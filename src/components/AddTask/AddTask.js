@@ -79,7 +79,7 @@ class AddTask extends Component {
 
     this.setState({
       btnDisabled: true,
-      startTime: moment().format("hh:mm:ss")
+      startTime: moment().format("HH:mm")
     });
 
     this.setState({
@@ -102,12 +102,11 @@ class AddTask extends Component {
     });
   }
   stopTimer() {
-    // TODO: Send to server
     const data = {
       name: this.state.taskName,
       category: this.state.taskCategory,
       startTime: this.state.startTime,
-      endTime: moment().format("hh:mm:ss")
+      endTime: moment().format("HH:mm")
     };
     console.log(data);
     postToServer(process.env.REACT_APP_POST_TASK_URL, data).then(res =>
@@ -117,7 +116,7 @@ class AddTask extends Component {
     this.setState({
       timer: null,
       taskName: "",
-      starTime: "",
+      startTime: "",
       duration: "00:00:00",
       taskCategory: this.state.categoriesOptions[0].value
     });
