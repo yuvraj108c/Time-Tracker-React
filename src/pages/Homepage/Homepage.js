@@ -5,6 +5,7 @@ import { Container, Grid, Loader, Dimmer } from "semantic-ui-react";
 import AddCategory from "../../components/AddCategory";
 import AddTask from "../../components/AddTask";
 import DisplayTask from "../../components/DisplayTask";
+import DisplayChart from "../../components/DisplayChart";
 
 class Homepage extends Component {
   constructor() {
@@ -50,7 +51,7 @@ class Homepage extends Component {
           ) : (
             <Container>
               <Grid>
-                <Grid.Column mobile={16} computer={10}>
+                <Grid.Column mobile={16} computer={11}>
                   {categories.length > 0 ? (
                     <AddTask
                       categories={categories}
@@ -61,7 +62,8 @@ class Homepage extends Component {
                   )}
                   <DisplayTask tasks={tasks} />
                 </Grid.Column>
-                <Grid.Column mobile={16} computer={6}>
+                <Grid.Column mobile={16} computer={5}>
+                  <DisplayChart tasks={tasks} />
                   <AddCategory fetchCategories={this.fetchCategories} />
                 </Grid.Column>
               </Grid>
