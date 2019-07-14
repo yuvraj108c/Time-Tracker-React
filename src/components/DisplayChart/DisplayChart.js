@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Chart from "chart.js";
-// import { Card } from "semantic-ui-react";
+import { Card } from "semantic-ui-react";
 import { getDurationInHours } from "../../utils/calculateDuration";
+import "./style.scss";
 
 class DisplayChart extends Component {
   constructor() {
@@ -9,7 +10,8 @@ class DisplayChart extends Component {
     this.state = {
       labels: [],
       data: [],
-      backgroundColors: []
+      backgroundColors: [],
+      totalTime: 0
     };
     this.computeDataAndDrawChart = this.computeDataAndDrawChart.bind(this);
     this.drawChart = this.drawChart.bind(this);
@@ -30,10 +32,13 @@ class DisplayChart extends Component {
     let labels = [];
     let data = [];
     let backgroundColors = [];
+    let totalTime = 0;
 
     this.props.tasks.forEach(task => {
       const taskCategory = task.category[0];
       const taskDuration = getDurationInHours(task.startTime, task.endTime);
+
+      totalTime += taskDuration;
 
       timePerCategory[taskCategory.name] = {
         sum:
@@ -46,11 +51,11 @@ class DisplayChart extends Component {
 
     Object.keys(timePerCategory).forEach(c => {
       labels.push(c);
-      data.push(timePerCategory[c].sum);
+      data.push(timePerCategory[c].sum.toFixed(2));
       backgroundColors.push(timePerCategory[c].color);
     });
 
-    this.setState({ labels, data, backgroundColors });
+    this.setState({ labels, data, backgroundColors, totalTime });
 
     this.drawChart("doughnut", labels, data, backgroundColors);
   }
@@ -78,9 +83,14 @@ class DisplayChart extends Component {
 
   render() {
     return (
-      <canvas id="myChart" width="1" height="1" />
-      //   <Card>
-      /* </Card> */
+      <Card className="chart-card">
+        <Card.Header className="text-center">
+          <h3>Total Time : {this.state.totalTime.toFixed(2)} Hours</h3>
+        </Card.Header>
+        <Card.Content>
+          <canvas id="myChart" width="1" height="1" />
+        </Card.Content>
+      </Card>
     );
   }
 }
