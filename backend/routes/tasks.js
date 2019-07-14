@@ -6,8 +6,16 @@ const Categories = require("../models/Category");
 // Get all tasks
 router.get("/", async (_, res) => {
   try {
-    const tasks = await Tasks.find();
-    res.json(tasks);
+    Tasks.aggregate([
+      {
+        $lookup: {
+          from: "categories",
+          localField: "category",
+          foreignField: "_id",
+          as: "category"
+        }
+      }
+    ]).then(data => res.json(data));
   } catch (err) {
     res.status(500).json("Error: " + err);
     throw new Error(err);
