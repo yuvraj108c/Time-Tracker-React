@@ -62,6 +62,10 @@ class DisplayChart extends Component {
 
   drawChart(type, labels, data, backgroundColors) {
     let ctx = document.getElementById("myChart");
+
+    // Clear previous chart
+    ctx.innerHTML = "";
+
     new Chart(ctx, {
       type: type,
       data: {
