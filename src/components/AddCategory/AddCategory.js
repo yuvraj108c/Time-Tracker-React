@@ -66,6 +66,8 @@ class AddCategory extends Component {
         category: "",
         displayPicker: false
       });
+
+      this.props.fetchCategories();
     });
   }
 
