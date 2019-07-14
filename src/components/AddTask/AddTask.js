@@ -107,6 +107,8 @@ class AddTask extends Component {
             duration: this.state.duration
           })
         );
+
+        document.title = this.state.duration;
       }, 1000)
     });
   }
@@ -131,6 +133,7 @@ class AddTask extends Component {
       taskCategory: this.state.dropdownOptions[0].value
     });
     localStorage.removeItem("Task");
+    document.title = "Time Tracker";
   }
   render() {
     return (

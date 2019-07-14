@@ -1,5 +1,5 @@
 import React from "react";
-import calculateDuration from "../../utils/calculateDuration";
+import { getDurationString } from "../../utils/calculateDuration";
 
 import Task from "./Task";
 import { Card, Item, Grid } from "semantic-ui-react";
@@ -13,8 +13,8 @@ const DisplayTask = props => {
         <Item className="task-item-header">
           <Item.Content>
             <Grid>
-              <Grid.Column mobile={6}>Name</Grid.Column>
-              <Grid.Column mobile={3}>Category</Grid.Column>
+              <Grid.Column mobile={5}>Name</Grid.Column>
+              <Grid.Column mobile={4}>Category</Grid.Column>
               <Grid.Column mobile={2}>Start</Grid.Column>
               <Grid.Column mobile={2}>End</Grid.Column>
               <Grid.Column className="text-center" mobile={3}>
@@ -36,7 +36,7 @@ const DisplayTask = props => {
               categoryColor={category[0].color}
               startTime={startTime}
               endTime={endTime}
-              duration={calculateDuration(startTime, endTime)}
+              duration={getDurationString(startTime, endTime)}
             />
           );
         })}

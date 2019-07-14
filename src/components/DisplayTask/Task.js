@@ -16,8 +16,8 @@ const Task = props => {
     <Item className="task-item">
       <Item.Content>
         <Grid>
-          <Grid.Column mobile={6}>{name}</Grid.Column>
-          <Grid.Column mobile={3} style={{ color: categoryColor }}>
+          <Grid.Column mobile={5}>{name}</Grid.Column>
+          <Grid.Column mobile={4} style={{ color: categoryColor }}>
             <Label circular empty style={{ backgroundColor: categoryColor }} />
             {categoryName}
           </Grid.Column>
