@@ -82,7 +82,11 @@ class AddCategory extends Component {
         />
         {/* Color Picker */}
         {this.state.displayPicker && (
-          <SketchPicker onChange={this.setColor} color={color} />
+          <SketchPicker
+            className="animated fadeIn"
+            onChange={this.setColor}
+            color={color}
+          />
         )}
       </Card>
     );
