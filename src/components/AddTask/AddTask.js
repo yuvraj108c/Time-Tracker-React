@@ -19,6 +19,7 @@ class AddTask extends Component {
       taskCategory: "",
       startTime: "",
       duration: "00:00:00",
+      durationColor: props.categories[0].color,
       btnText: "Start",
       btnColor: "blue",
       btnDisabled: false,
@@ -63,8 +64,10 @@ class AddTask extends Component {
     });
   }
   handleDropdownChange(e, { name, value }) {
+    let category = this.props.categories.filter(c => c.name === value);
     this.setState({
-      [name]: value
+      [name]: value,
+      durationColor: category[0].color
     });
   }
   handleButtonClick() {
@@ -130,7 +133,8 @@ class AddTask extends Component {
       taskName: "",
       startTime: "",
       duration: "00:00:00",
-      taskCategory: this.state.dropdownOptions[0].value
+      taskCategory: this.state.dropdownOptions[0].value,
+      durationColor: this.props.categories[0].color
     });
     localStorage.removeItem("Task");
     document.title = "Time Tracker";
@@ -156,6 +160,7 @@ class AddTask extends Component {
                     ? "duration-display"
                     : "duration-display animated infinite flash"
                 }
+                style={{ color: this.state.durationColor }}
               >
                 {this.state.duration}
               </h3>
