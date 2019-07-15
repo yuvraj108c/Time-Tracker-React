@@ -171,6 +171,7 @@ class AddTask extends Component {
                 color={this.state.btnColor}
                 handleClick={this.handleButtonClick}
                 disabled={this.state.btnDisabled}
+                animated={this.state.timer === null}
               />
             </Grid.Column>
           </Grid>

@@ -3,9 +3,14 @@ import { Button } from "semantic-ui-react";
 
 class Btn extends Component {
   render() {
-    const { text, color, handleClick, disabled } = this.props;
+    const { text, color, handleClick, disabled, animated } = this.props;
     return (
-      <Button disabled={disabled} color={color} onClick={handleClick}>
+      <Button
+        className={animated ? "pulsing" : ""}
+        disabled={disabled}
+        color={color}
+        onClick={handleClick}
+      >
         {text}
       </Button>
     );
