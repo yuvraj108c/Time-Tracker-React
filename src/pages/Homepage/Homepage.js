@@ -27,7 +27,7 @@ class Homepage extends Component {
   fetchCategories() {
     // Create object {name,color} from category
     http.get(process.env.REACT_APP_GET_CATEGORIES_URL).then(c => {
-      this.setState({ categories: c.reverse() });
+      this.setState({ categories: c });
     });
   }
 
