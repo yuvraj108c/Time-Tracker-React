@@ -26,15 +26,15 @@ class Homepage extends Component {
 
   fetchCategories() {
     // Create object {name,color} from category
-    http.get(process.env.REACT_APP_GET_CATEGORIES_URL).then(categories => {
-      this.setState({ categories });
+    http.get(process.env.REACT_APP_GET_CATEGORIES_URL).then(c => {
+      this.setState({ categories: c.reverse() });
     });
   }
 
   fetchTasks() {
     //   Get all tasks
     http.get(process.env.REACT_APP_GET_TASKS_URL).then(t => {
-      this.setState({ tasks: t });
+      this.setState({ tasks: t.reverse() });
       this.setState({ loading: false });
     });
   }
