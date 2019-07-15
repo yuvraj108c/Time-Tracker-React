@@ -2,11 +2,19 @@ const express = require("express");
 const router = express.Router();
 const Tasks = require("../models/Task");
 const Categories = require("../models/Category");
+const moment = require("moment");
 
 // Get all tasks
 router.get("/", async (_, res) => {
   try {
     Tasks.aggregate([
+      {
+        $match: {
+          createdOn: {
+            $eq: moment().format("YYYY-MM-DD")
+          }
+        }
+      },
       {
         $lookup: {
           from: "categories",
@@ -22,7 +30,7 @@ router.get("/", async (_, res) => {
   }
 });
 
-// Post a category
+// Post a task
 router.post("/", async (req, res) => {
   try {
     const { name, category, startTime, endTime, duration } = req.body;
