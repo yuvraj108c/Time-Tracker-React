@@ -49,7 +49,7 @@ class Homepage extends Component {
               <Loader inverted>Loading</Loader>
             </Dimmer>
           ) : (
-            <Container>
+            <Container className="animated fadeIn">
               <Grid>
                 <Grid.Column mobile={16} computer={11}>
                   {categories.length > 0 ? (
