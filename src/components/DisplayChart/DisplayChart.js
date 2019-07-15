@@ -61,10 +61,10 @@ class DisplayChart extends Component {
   }
 
   drawChart(type, labels, data, backgroundColors) {
-    let ctx = document.getElementById("myChart");
+    let container = document.getElementById("chart-container");
+    container.innerHTML = "<canvas id='myChart' width='1' height='1'></canvas>";
 
-    // Clear previous chart
-    ctx.innerHTML = "";
+    let ctx = document.getElementById("myChart");
 
     new Chart(ctx, {
       type: type,
@@ -91,9 +91,7 @@ class DisplayChart extends Component {
         <Card.Header className="text-center">
           <h3>Total Time : {this.state.totalTime.toFixed(2)} Hours</h3>
         </Card.Header>
-        <Card.Content>
-          <canvas id="myChart" width="1" height="1" />
-        </Card.Content>
+        <Card.Content id="chart-container" />
       </Card>
     );
   }
