@@ -1,16 +1,16 @@
 import React, { Component } from "react";
-import Chart from "chart.js";
 import { Card } from "semantic-ui-react";
 import { getDurationInHours } from "../../utils/calculateDuration";
-import "./style.scss";
+import DoughnutChart from "./DoughnutChart";
 
+import "./style.scss";
 class DisplayChart extends Component {
   constructor() {
     super();
     this.state = {
       labels: [],
       data: [],
-      backgroundColors: [],
+      backgroundColor: [],
       totalTime: 0
     };
     this.computeDataAndDrawChart = this.computeDataAndDrawChart.bind(this);
@@ -31,7 +31,7 @@ class DisplayChart extends Component {
     let timePerCategory = {};
     let labels = [];
     let data = [];
-    let backgroundColors = [];
+    let backgroundColor = [];
     let totalTime = 0;
 
     this.props.tasks.forEach(task => {
@@ -52,46 +52,44 @@ class DisplayChart extends Component {
     Object.keys(timePerCategory).forEach(c => {
       labels.push(c);
       data.push(timePerCategory[c].sum.toFixed(2));
-      backgroundColors.push(timePerCategory[c].color);
+      backgroundColor.push(timePerCategory[c].color);
     });
 
-    this.setState({ labels, data, backgroundColors, totalTime });
+    this.setState({ labels, data, backgroundColor, totalTime });
 
-    this.drawChart("doughnut", labels, data, backgroundColors);
+    this.drawChart("doughnut", labels, data, backgroundColor);
   }
 
-  drawChart(type, labels, data, backgroundColors) {
-    let container = document.getElementById("chart-container");
-    container.innerHTML = "<canvas id='myChart' width='1' height='1'></canvas>";
-
-    let ctx = document.getElementById("myChart");
-
-    new Chart(ctx, {
-      type: type,
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            data: data,
-            backgroundColor: backgroundColors
-          }
-        ]
-      },
-      options: {
-        legend: {
-          display: false
+  drawChart(labels, data, backgroundColor) {
+    const data2 = {
+      labels: labels,
+      datasets: [
+        {
+          data,
+          backgroundColor
         }
+      ]
+    };
+    const options = {
+      legend: {
+        display: false
       }
-    });
+    };
+
+    return <DoughnutChart data={data2} options={options} />;
   }
 
   render() {
+    const { data, labels, backgroundColor, totalTime } = this.state;
+
     return (
       <Card className="chart-card">
         <Card.Header className="text-center">
-          <h3>Total Time : {this.state.totalTime.toFixed(2)} Hours</h3>
+          <h3>Total Time : {totalTime.toFixed(2)} Hours</h3>
         </Card.Header>
-        <Card.Content id="chart-container" />
+        <Card.Content>
+          {this.drawChart(labels, data, backgroundColor)}
+        </Card.Content>
       </Card>
     );
   }
