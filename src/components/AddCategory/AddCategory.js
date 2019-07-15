@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import postToServer from "../../utils/postToServer";
+import http from "../../utils/http";
 
 import { Card } from "semantic-ui-react";
 import { SketchPicker } from "react-color";
@@ -54,10 +54,7 @@ class AddCategory extends Component {
       color: this.state.color
     };
 
-    const response = postToServer(
-      process.env.REACT_APP_POST_CATEGORY_URL,
-      data
-    );
+    const response = http.post(process.env.REACT_APP_POST_CATEGORY_URL, data);
 
     response.then(r => {
       console.log(r);

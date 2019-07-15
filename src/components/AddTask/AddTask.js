@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import moment from "moment";
 
-import postToServer from "../../utils/postToServer";
+import http from "../../utils/http";
 import InputWithDropdown from "./InputWithDropdown";
 import Btn from "./Btn";
 
@@ -120,7 +120,7 @@ class AddTask extends Component {
       endTime: moment().format("HH:mm")
     };
     console.log(data);
-    postToServer(process.env.REACT_APP_POST_TASK_URL, data).then(res => {
+    http.post(process.env.REACT_APP_POST_TASK_URL, data).then(res => {
       console.log(res);
       this.props.fetchTasks();
     });

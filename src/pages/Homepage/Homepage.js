@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import getFromServer from "../../utils/getFromServer";
+import http from "../../utils/http";
 import { Container, Grid, Loader, Dimmer } from "semantic-ui-react";
 
 import AddCategory from "../../components/AddCategory";
@@ -26,14 +26,14 @@ class Homepage extends Component {
 
   fetchCategories() {
     // Create object {name,color} from category
-    getFromServer(process.env.REACT_APP_GET_CATEGORIES_URL).then(categories => {
+    http.get(process.env.REACT_APP_GET_CATEGORIES_URL).then(categories => {
       this.setState({ categories });
     });
   }
 
   fetchTasks() {
     //   Get all tasks
-    getFromServer(process.env.REACT_APP_GET_TASKS_URL).then(t => {
+    http.get(process.env.REACT_APP_GET_TASKS_URL).then(t => {
       this.setState({ tasks: t });
       this.setState({ loading: false });
     });
