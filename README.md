@@ -4,11 +4,9 @@ Track how you spend your time visually.
 
 ## Features
 
-- Start a timer.
-- Choose task category.
-- Stop the timer when task is completed.
-- Visualize total time spent by category on a graph.
-- Add new category & colors.
+- Track time spent on tasks
+- Create new category & colors
+- Visualize total time spent on a graph
 
 ## Usage Instructions
 
