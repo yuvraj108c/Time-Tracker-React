@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card } from "semantic-ui-react";
-import { getDurationInHours } from "../../utils/calculateDuration";
+
+import { computeChartData } from "./helper";
 import DoughnutChart from "./DoughnutChart";
 
 import "./style.scss";
@@ -13,51 +14,30 @@ class DisplayChart extends Component {
       backgroundColor: [],
       totalTime: 0
     };
-    this.computeDataAndDrawChart = this.computeDataAndDrawChart.bind(this);
+    this.computeData = this.computeData.bind(this);
     this.drawChart = this.drawChart.bind(this);
   }
 
   componentDidMount() {
-    this.computeDataAndDrawChart();
+    this.computeData();
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.tasks.length < this.props.tasks.length) {
-      this.computeDataAndDrawChart();
+      this.computeData();
     }
   }
 
-  computeDataAndDrawChart() {
-    let timePerCategory = {};
-    let labels = [];
-    let data = [];
-    let backgroundColor = [];
-    let totalTime = 0;
-
-    this.props.tasks.forEach(task => {
-      const taskCategory = task.category[0];
-      const taskDuration = getDurationInHours(task.startTime, task.endTime);
-
-      totalTime += taskDuration;
-
-      timePerCategory[taskCategory.name] = {
-        sum:
-          timePerCategory[taskCategory.name] === undefined
-            ? taskDuration
-            : timePerCategory[taskCategory.name].sum + taskDuration,
-        color: taskCategory.color
-      };
+  computeData() {
+    const { labels, data, backgroundColor, totalTime } = computeChartData(
+      this.props.tasks
+    );
+    this.setState({
+      labels,
+      data,
+      backgroundColor,
+      totalTime
     });
-
-    Object.keys(timePerCategory).forEach(c => {
-      labels.push(c);
-      data.push(timePerCategory[c].sum.toFixed(2));
-      backgroundColor.push(timePerCategory[c].color);
-    });
-
-    this.setState({ labels, data, backgroundColor, totalTime });
-
-    this.drawChart("doughnut", labels, data, backgroundColor);
   }
 
   drawChart(labels, data, backgroundColor) {
