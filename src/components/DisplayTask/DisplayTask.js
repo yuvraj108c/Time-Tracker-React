@@ -13,13 +13,11 @@ const DisplayTask = props => {
         <Item className="task-item-header">
           <Item.Content>
             <Grid>
-              <Grid.Column mobile={5}>Name</Grid.Column>
-              <Grid.Column mobile={4}>Category</Grid.Column>
-              <Grid.Column mobile={2}>Start</Grid.Column>
-              <Grid.Column mobile={2}>End</Grid.Column>
-              <Grid.Column className="text-center" mobile={3}>
-                Duration
-              </Grid.Column>
+              <Grid.Column computer={5}>Name</Grid.Column>
+              <Grid.Column computer={3}>Category</Grid.Column>
+              <Grid.Column computer={3}>Start</Grid.Column>
+              <Grid.Column computer={3}>End</Grid.Column>
+              <Grid.Column computer={2}>Duration</Grid.Column>
             </Grid>
           </Item.Content>
         </Item>

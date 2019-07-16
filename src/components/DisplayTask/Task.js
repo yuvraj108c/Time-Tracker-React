@@ -16,16 +16,14 @@ const Task = props => {
     <Item className="task-item">
       <Item.Content>
         <Grid>
-          <Grid.Column mobile={5}>{name}</Grid.Column>
-          <Grid.Column mobile={4} style={{ color: categoryColor }}>
+          <Grid.Column computer={5}>{name}</Grid.Column>
+          <Grid.Column computer={3} style={{ color: categoryColor }}>
             <Label circular empty style={{ backgroundColor: categoryColor }} />
             {categoryName}
           </Grid.Column>
-          <Grid.Column mobile={2}>{startTime}</Grid.Column>
-          <Grid.Column mobile={2}>{endTime}</Grid.Column>
-          <Grid.Column className="text-center" mobile={3}>
-            {duration}
-          </Grid.Column>
+          <Grid.Column computer={3}>{startTime}</Grid.Column>
+          <Grid.Column computer={3}>{endTime}</Grid.Column>
+          <Grid.Column computer={2}>{duration}</Grid.Column>
         </Grid>
       </Item.Content>
     </Item>

@@ -51,7 +51,7 @@ class Homepage extends Component {
           ) : (
             <Container className="animated fadeIn">
               <Grid>
-                <Grid.Column mobile={16} computer={11}>
+                <Grid.Column mobile={16} computer={12}>
                   {categories.length > 0 ? (
                     <AddTask
                       categories={categories}
@@ -62,7 +62,7 @@ class Homepage extends Component {
                   )}
                   <DisplayTask tasks={tasks} />
                 </Grid.Column>
-                <Grid.Column mobile={16} computer={5}>
+                <Grid.Column mobile={16} computer={4}>
                   <DisplayChart tasks={tasks} />
                   <AddCategory fetchCategories={this.fetchCategories} />
                 </Grid.Column>
