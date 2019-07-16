@@ -8,6 +8,13 @@ Track how you spend your time visually.
 - Create new category & colors
 - Visualize total time spent on a graph
 
+## Technology Stack
+
+- MongodDB
+- ExpressJS
+- ReactJS
+- NodeJS
+
 ## Usage Instructions
 
 #### 1. Clone this repository
