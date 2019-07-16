@@ -1,97 +1,75 @@
 import React, { Component } from "react";
-import Chart from "chart.js";
 import { Card } from "semantic-ui-react";
-import { getDurationInHours } from "../../utils/calculateDuration";
-import "./style.scss";
 
+import { computeChartData } from "./helper";
+import DoughnutChart from "./DoughnutChart";
+
+import "./style.scss";
 class DisplayChart extends Component {
   constructor() {
     super();
     this.state = {
       labels: [],
       data: [],
-      backgroundColors: [],
+      backgroundColor: [],
       totalTime: 0
     };
-    this.computeDataAndDrawChart = this.computeDataAndDrawChart.bind(this);
+    this.computeData = this.computeData.bind(this);
     this.drawChart = this.drawChart.bind(this);
   }
 
   componentDidMount() {
-    this.computeDataAndDrawChart();
+    this.computeData();
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.tasks.length < this.props.tasks.length) {
-      this.computeDataAndDrawChart();
+      this.computeData();
     }
   }
 
-  computeDataAndDrawChart() {
-    let timePerCategory = {};
-    let labels = [];
-    let data = [];
-    let backgroundColors = [];
-    let totalTime = 0;
-
-    this.props.tasks.forEach(task => {
-      const taskCategory = task.category[0];
-      const taskDuration = getDurationInHours(task.startTime, task.endTime);
-
-      totalTime += taskDuration;
-
-      timePerCategory[taskCategory.name] = {
-        sum:
-          timePerCategory[taskCategory.name] === undefined
-            ? taskDuration
-            : timePerCategory[taskCategory.name].sum + taskDuration,
-        color: taskCategory.color
-      };
+  computeData() {
+    const { labels, data, backgroundColor, totalTime } = computeChartData(
+      this.props.tasks
+    );
+    this.setState({
+      labels,
+      data,
+      backgroundColor,
+      totalTime
     });
-
-    Object.keys(timePerCategory).forEach(c => {
-      labels.push(c);
-      data.push(timePerCategory[c].sum.toFixed(2));
-      backgroundColors.push(timePerCategory[c].color);
-    });
-
-    this.setState({ labels, data, backgroundColors, totalTime });
-
-    this.drawChart("doughnut", labels, data, backgroundColors);
   }
 
-  drawChart(type, labels, data, backgroundColors) {
-    let container = document.getElementById("chart-container");
-    container.innerHTML = "<canvas id='myChart' width='1' height='1'></canvas>";
-
-    let ctx = document.getElementById("myChart");
-
-    new Chart(ctx, {
-      type: type,
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            data: data,
-            backgroundColor: backgroundColors
-          }
-        ]
-      },
-      options: {
-        legend: {
-          display: false
+  drawChart(labels, data, backgroundColor) {
+    const data2 = {
+      labels: labels,
+      datasets: [
+        {
+          data,
+          backgroundColor
         }
+      ]
+    };
+    const options = {
+      legend: {
+        display: false
       }
-    });
+    };
+
+    return <DoughnutChart data={data2} options={options} />;
   }
 
   render() {
+    const { data, labels, backgroundColor, totalTime } = this.state;
+
     return (
       <Card className="chart-card">
         <Card.Header className="text-center">
-          <h3>Total Time : {this.state.totalTime.toFixed(2)} Hours</h3>
+          <h3>Total Time : {totalTime.toFixed(2)} Hours</h3>
         </Card.Header>
-        <Card.Content id="chart-container" />
+        <Card.Content>
+          {this.drawChart(labels, data, backgroundColor)}
+        </Card.Content>
       </Card>
     );
   }
