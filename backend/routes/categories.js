@@ -28,8 +28,15 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const { name, color } = req.body;
-    const newCategory = await new Categories({ name, color }).save();
-    res.json(newCategory);
+    const exists = await Categories.findOne({ name });
+    if (!exists) {
+      const newCategory = await new Categories({ name, color }).save();
+      res.json(newCategory);
+    } else {
+      // Update category
+      exists.color = color;
+      exists.save().then(c => res.json(c));
+    }
   } catch (err) {
     res.status(500).json("Error: " + err);
     throw new Error(err);
